@@ -1,0 +1,52 @@
+<div class="jumbotron" style="height: 100%">
+    <h2>Dashboard</h2>
+    <table  ng-if="issuePresence" class="table table-striped">
+        <thead>
+        <tr>
+            <td class="hoverable" ng-click="order('Title')">
+                Issue
+                <span class="sortorder" ng-show="orderedBy === 'Title'" ng-class="{reverse:reverse}"></span>
+            </td>
+            <td class="hoverable" ng-click="order('Project.Name')">
+                Project
+                <span class="sortorder" ng-show="orderedBy === 'Project.Name'" ng-class="{reverse:reverse}"></span>
+            </td>
+            <td class="hoverable" ng-click="order('DueDate')">
+                Due Date
+                <span class="sortorder" ng-show="orderedBy === 'DueDate'" ng-class="{reverse:reverse}"></span>
+            </td>
+        </tr>
+        </thead>
+
+
+        <tbody>
+        <tr ng-repeat="issue in issues | orderBy:orderedBy:reverse">
+            <td class="hoverable" ng-click="viewIssue(issue.Id)">{{issue.Title}}</td>
+            <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project['Name']}}</td>
+            <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div ng-if="!issuePresence && loaded">
+        <h3><span class="label label-success">No Issues</span></h3>
+    </div>
+
+    <uib-pagination
+            ng-if="issuePresence"
+            ng-change="getIssues()"
+            total-items="totalItems"
+            ng-model="currentPage"
+            items-per-page="itemsPerPage"
+            max-size="5"
+            class="pagination-sm"
+            boundary-links="true"
+            direction-links="true"
+            rotate="true"
+            force-ellipses = "true"
+            first-text="<<"
+            previous-text="<"
+            next-text=">"
+            last-text=">>">
+    </uib-pagination>
+</div>

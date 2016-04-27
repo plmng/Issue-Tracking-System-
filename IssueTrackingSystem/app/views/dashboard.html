@@ -1,0 +1,38 @@
+<div ng-if="!isAuthenticated" class="row">
+
+    <div  class = "col-md-10 col-md-offset-1 border" >
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Issue Tracking System</h1>
+            </div>
+            <div class="panel-body">
+                <br>
+                <div class = "col-md-12 border"   authentication-forms="authentication-forms"></div>
+            </div>
+        </div>
+</div>
+
+
+
+</div>
+<div class="row" ng-if="isAuthenticated" >
+    <ul class="nav nav-tabs">
+        <li><a href="#/" ng-click="setPanel('dashboard')">Dashboard</a></li>
+        <li><a href="#/" ng-click="setPanel('projects')">Projects</a></li>
+    </ul>
+    <div ng-if="panel === 'dashboard'">
+        <div dashboard-directive currentUser="currentUser"></div>
+    </div>
+
+    <div ng-if="panel === 'projects'">
+        <div user-projects currentUser="currentUser" ></div>
+    </div>
+
+
+    <div ng-if="isAdmin">
+        <a class="btn btn-primary" href="#/projects" >View All Projects</a>
+        <a class="btn btn-primary" href="#/projects/add">Add New Project</a>
+    </div>
+
+</div>
+
