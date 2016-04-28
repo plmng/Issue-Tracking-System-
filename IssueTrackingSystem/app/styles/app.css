@@ -1,5 +1,16 @@
 .main-content{
-    width: 90%;
-    margin: 100px auto auto auto;
+    width: 95%;
+    margin: 40px auto auto auto;
 }
-
+.green{
+    color: #18bc9c;
+}
+.bg-gray{
+    background-color: #ecf0f1;
+}
+.maxSized{
+    height: 100%;
+}
+.marginBottom0{
+    margin-bottom: 0px
+}

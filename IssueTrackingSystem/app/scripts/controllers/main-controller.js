@@ -9,7 +9,15 @@ angular
                 window.location.reload();
             };
 
-            $scope.panel = 'dashboard';
+            /*
+            * $scope.activeLink - prop. holds the name of li to be shown as active
+            * $scope.setActiveLink - func - set the current opened link
+            */
+            $scope.activeLink = '';
+            $scope.setActiveLink=function(link){
+                $scope.activeLink = link;
+            };
+
             identityService.getCurrentUser()
                 .then(function(user){
                     $scope.currentUser = user;
@@ -40,9 +48,7 @@ angular
 
             };
 
-            $scope.setPanel=function(panel){
-                $scope.panel = panel;
-            }
+
 
 
 

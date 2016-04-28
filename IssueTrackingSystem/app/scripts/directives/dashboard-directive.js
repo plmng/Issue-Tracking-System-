@@ -4,12 +4,9 @@ angular
     .directive('dashboardDirective', function(){
             return {
                 restrict: 'AE',
-                templateUrl: 'app/views/partials/dashboard-directive.html',
+                templateUrl: 'app/views/partials/dashboard-partial.html',
                 replace: true,
-                controller : 'DashboardController',
-                scope: {
-                    currentUser : "="
-                }
+                controller : 'DashboardController'
             }
         }
     );

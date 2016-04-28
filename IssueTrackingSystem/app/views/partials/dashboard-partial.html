@@ -1,0 +1,50 @@
+<div class="well maxSized marginBottom0 " >
+    <table  ng-if="issuePresence" class="table table-striped">
+        <thead>
+            <tr class="green">
+                <td> <h4>Issue Title</h4></td>
+                <td> <h4>Description</h4></td>
+                <td> <h4>Project</h4> </td>
+                <td> <h4>Due Date</h4></td>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="issue in issues | orderBy:orderedBy:reverse">
+                <td> {{issue.Title}} </td>
+                <td> {{issue.Description}} </td>
+                <td> {{issue.Project['Name']}} </td>
+                <td> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
+
+                <!-- Old table rows save for the functions
+                <td class="hoverable" ng-click="viewIssue(issue.Id)">{{issue.Title}}</td>
+                <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project['Name']}}</td>
+                <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+                -->
+            </tr>
+        </tbody>
+    </table>
+
+    <div ng-if="!issuePresence && loaded">
+        <h3><span class="label label-success">No Issues</span></h3>
+    </div>
+
+    <uib-pagination
+            ng-if="issuePresence"
+            ng-change="pageChanged(currentPage)"
+            total-items="totalItems"
+            ng-model="currentPage"
+            items-per-page="itemsPerPage"
+            max-size="5"
+            class="pagination-sm"
+            boundary-links="true"
+            direction-links="true"
+            rotate="true"
+            force-ellipses = "true"
+            first-text="<<"
+            previous-text="<"
+            next-text=">"
+            last-text=">>">
+    </uib-pagination>
+</div>

@@ -1,0 +1,30 @@
+<div>
+    <div ng-if="projectPresence">
+        <div  class="list-group table-of-contents marginBottom0" ng-repeat="project in projects ">
+            <a class="list-group-item">{{project.Name}}</a>
+        </div>
+    </div>
+
+    <div ng-if="!projectPresence && loaded">
+        <h3><span class="label label-success">No Projects</span></h3>
+    </div>
+
+    <uib-pagination
+            ng-if="projectPresence"
+            ng-change="projectpageChanged(projectCurrentPage)"
+            total-items="totalItems"
+            ng-model="projectCurrentPage"
+            items-per-page="itemsPerPage"
+            max-size="3"
+            class="pagination-sm"
+            boundary-links="true"
+            direction-links="true"
+            rotate="true"
+            force-ellipses = "true"
+            first-text="<<"
+            previous-text="<"
+            next-text=">"
+            last-text=">>">
+    </uib-pagination>
+
+</div>
