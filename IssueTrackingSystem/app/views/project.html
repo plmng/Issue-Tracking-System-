@@ -1,0 +1,48 @@
+<!-- Project Passport part -->
+<div class="col-md-2">
+    <h3><small>Project:</small> </h3>
+    <h3><span  class="text-success">{{project.Name}}</span></h3>
+    <hr>
+    <p><span class="text-success">Description: </span>{{project.Description}}</p>
+    <p><span class="text-success">Project Key: </span>{{project.ProjectKey}}</p>
+    <p><span class="text-success">Project Leader: </span>{{project.Lead.Username}}</p>
+    <p><span class="text-success">Labels: </span>
+        <span ng-repeat="label in project.Labels">
+            <span class="label label-success marginRight1">{{label.Name}} </span></span> </p>
+    <p><span class="text-success">Priorities: </span>
+        <span ng-repeat="priority in project.Priorities">
+            <span class="label label-success marginRight1">{{priority.Name}} </span></span> </p>
+</div>
+
+<!--Project Issues part -->
+<div class="col-md-10">
+    <div class="well maxSized marginBottom0 " >
+        <table  ng-if="issuePresence" class="table table-striped">
+            <thead>
+                <tr class="green">
+                    <td> <h4>Issue Title</h4></td>
+                    <td> <h4>Description</h4></td>
+                    <td class="nowrap"> <h4>Due Date</h4></td>
+                    <td class="nowrap"> <h4>Assignee</h4> </td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="issue in issues ">
+                    <td> {{issue.Title}} </td>
+                    <td> {{issue.Description}} </td>
+                    <td> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
+                    <td> {{issue.Assignee['Username']}} </td>
+
+                    <!-- Old table rows save for the functions
+                    <td class="hoverable" ng-click="viewIssue(issue.Id)">{{issue.Title}}</td>
+                    <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project['Name']}}</td>
+                    <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+                    -->
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+

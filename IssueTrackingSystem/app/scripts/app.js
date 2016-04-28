@@ -18,11 +18,11 @@ angular
                 templateUrl: 'app/views/dashboard.html',
                 controller: 'MainController'
             });
-            /*
             $routeProvider.when('/projects/:id', {
-                templateUrl: 'app/views/',
-                controller: ''
+                templateUrl: 'app/views/project.html',
+                controller: 'ProjectController'
             });
+            /*
             $routeProvider.when('/projects/:id/edit', {
                 templateUrl: 'app/views/',
                 controller: ''
