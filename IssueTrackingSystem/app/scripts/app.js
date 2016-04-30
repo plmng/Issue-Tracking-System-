@@ -17,16 +17,35 @@ angular
             $routeProvider.when('/', {
                 templateUrl: 'app/views/dashboard.html',
                 controller: 'MainController'
+                //TODO:only for authorised
             });
             $routeProvider.when('/projects/:id', {
                 templateUrl: 'app/views/project.html',
                 controller: 'ProjectController'
+                //TODO:only for authorised and check for all restrictions
             });
-            /*
             $routeProvider.when('/projects/:id/edit', {
-                templateUrl: 'app/views/',
-                controller: ''
+                templateUrl: 'app/views/project-form.html',
+                controller: 'ProjectEditController'
+                //TODO only for projectLeader and Admin
             });
+            $routeProvider.when('/projects', {
+                templateUrl: 'app/views/projects.html',
+                controller: 'ProjectAllController'
+                //TODO only for Admin
+            });
+            $routeProvider.when('/projects/add', {
+                templateUrl: 'app/views/project-form.html',
+                controller: 'ProjectAddController'
+                //TODO only for Admin
+            });
+            $routeProvider.when('/profile/password', {
+                templateUrl: 'app/views/user-change-password.html',
+                controller: 'MainController'
+                //TODO only for Admin
+            });
+
+            /*
             $routeProvider.when('/projects/:id/add-issue', {
                 templateUrl: 'app/views/',
                 controller: ''
@@ -82,12 +101,13 @@ angular
             */
             $routeProvider.otherwise({redirectTo: '/'});
             /*
-            * desc configuring global error handling via interceptor
-            * */
+            * desc configuring global server error handling via interceptor
+            */
             $httpProvider.interceptors.push(['$q', 'toastr', function($q, toastr){
                 return {
                     // desc all error response format types
                     'responseError' : function(rejection){
+                        toastr.options = {"positionClass": "toast-bottom-right"};
                         // error format with error_description
                         if(rejection.data && rejection.data['error_description']){
                             toastr.error(rejection.data['error_description']);

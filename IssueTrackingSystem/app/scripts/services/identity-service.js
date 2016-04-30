@@ -9,8 +9,9 @@ angular
     .factory('identityService',[
         '$http',
         '$q',
+        '$location',
         'BASE_URL',
-        function identityService($http, $q, BASE_URL){
+        function identityService($http, $q, $location, BASE_URL){
             var deferred = $q.defer();
             var currentUser = undefined;
 
@@ -54,6 +55,17 @@ angular
                 return currentUserDataDeferred.promise;
             }
 
+            function changePassword(passData){
+                var deferred = $q.defer();
+
+                $http.post(BASE_URL + 'api/Account/ChangePassword', passData)
+                    .then(function(response){
+                        response['customMsg'] = "successfully changed password";
+                        deferred.resolve(response);
+                    });
+
+                return deferred.promise;
+            }
 
 
             function isAdmin(){
@@ -65,7 +77,8 @@ angular
                 getCurrentUser : getCurrentUser,
                 loadCurrentUserData : loadCurrentUserData,
                 removeCurrentUserData : removeCurrentUserData,
-                isAdmin : isAdmin
+                isAdmin : isAdmin,
+                changePassword : changePassword
             }
         }
     ]);

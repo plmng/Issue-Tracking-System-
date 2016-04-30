@@ -1,7 +1,7 @@
 <div>
     <div ng-if="projectPresence">
         <div  class="list-group table-of-contents marginBottom0" ng-repeat="project in projects ">
-            <a class="list-group-item">{{project.Name}}</a>
+            <a href="/#/projects/{{project.Id}}" class="list-group-item">{{project.Name}}</a>
         </div>
     </div>
 

@@ -1,2 +1,77 @@
-<p>this is projects view</p>
+<div ng-if="loaded">
+    <div class="row">
+        <div class="col-md-2">
+            <h2 class="green ">All Projects</h2>
+        </div>
+        <div class="col-md-4 col-md-offset-6 form-group has-success">
+            <input type="text" class="form-control" placeholder="Search by project name" ng-model="searchedName">
+        </div>
+    </div>
+
+    <div class="well maxSized marginBottom0 " >
+        <table  ng-if="projectsPresence" class="table table-striped">
+            <thead>
+            <tr class="green">
+                <td class="col-md-2"> <h4>Project Name</h4></td>
+                <td class="col-md-6"> <h4>Description</h4></td>
+                <td class="col-md-2"> <h4>Leader</h4> </td>
+                <td class="col-md-2"></td>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr ng-if="!searchedName" ng-repeat="project in projects | orderBy: project.Id">
+                <td> {{project.Name}} </td>
+                <td> {{project.Description}} </td>
+                <td> {{project.Lead['Username']}} </td>
+                <td>
+                    <button class="btn btn-primary btn-xs"
+                            ng-click="editProject(project.Id)">Edit project</button>
+                    <button class="btn btn-primary btn-xs">Add Issue</button>
+                </td>
+            </tr>
+            <tr ng-if="searchedName" ng-repeat="project in projects | orderBy: project.Id | filter:searchedName">
+                <td> {{project.Name}} </td>
+                <td> {{project.Description}} </td>
+                <td> {{project.Lead['Username']}} </td>
+                <td>
+                    <button class="btn btn-primary btn-xs"
+                            ng-click="editProject(project.Id)">Edit project</button>
+                    <button class="btn btn-primary btn-xs">Add Issue</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div ng-if="!projectsPresence && loaded">
+            <h3><span class="label label-success">No Projects</span></h3>
+        </div>
+<div class="row">
+    <div class="col-md-8">
+        <uib-pagination
+                ng-if="projectsPresence"
+                ng-change="pageChanged(currentPage)"
+                total-items="totalItems"
+                ng-model="currentPage"
+                items-per-page="itemsPerPage"
+                max-size="5"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="true"
+                rotate="true"
+                force-ellipses = "true"
+                first-text="<<"
+                previous-text="<"
+                next-text=">"
+                last-text=">>">
+        </uib-pagination>
+    </div>
+    <div class="col-md-1 col-lg-offset-2">
+        <button class="btn btn-success">New Project</button>
+    </div>
+</div>
+
+    </div>
+</div>
 

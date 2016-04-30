@@ -65,11 +65,44 @@ angular
                 return deferred.promise;
             }
 
+            /*
+            * edit project
+            * [PUT] Projects/{id}
+            * •	Purpose: Edits a project by a given id
+            * •	Security: Admin, Lead of project
+            * •	Body parameters:
+            * •	Same as [POST] Projects/, except for ProjectKey which cannot be edited
+            * •	Returns: The edited project
+            */
+
+            function putEditedProject(id, projectToEdit){
+                var deferred = $q.defer();
+
+                $http.put(BASE_URL + 'projects/' + id, projectToEdit)
+                    .then(function(response){
+                        console.log('edit project from service - response received');
+                        console.log(response);
+                        deferred.resolve(response.data);
+                    });
+                return deferred.promise;
+            }
+
+            function getAllProjectsPaged(pageNumber, filter){
+                var deferred = $q.defer();
+                getProjectByFilter(pageNumber, filter)
+                    .then(function (response){
+                        deferred.resolve(response);
+                    });
+                return deferred.promise;
+            }
+
             return{
                 getProjectByFilter : getProjectByFilter,
                 getProjectsByUserId : getProjectsByUserId,
                 getProjectById : getProjectById,
-                getIssuesByProjectId : getIssuesByProjectId
+                getIssuesByProjectId : getIssuesByProjectId,
+                putEditedProject : putEditedProject,
+                getAllProjectsPaged : getAllProjectsPaged
             }
         }
     ]);

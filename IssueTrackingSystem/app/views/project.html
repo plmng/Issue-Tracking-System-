@@ -1,17 +1,26 @@
 <!-- Project Passport part -->
 <div class="col-md-2">
     <h3><small>Project:</small> </h3>
-    <h3><span  class="text-success">{{project.Name}}</span></h3>
+    <h3><span class="text-success">{{project.Name}}</span></h3>
     <hr>
     <p><span class="text-success">Description: </span>{{project.Description}}</p>
     <p><span class="text-success">Project Key: </span>{{project.ProjectKey}}</p>
     <p><span class="text-success">Project Leader: </span>{{project.Lead.Username}}</p>
     <p><span class="text-success">Labels: </span>
         <span ng-repeat="label in project.Labels">
-            <span class="label label-success marginRight1">{{label.Name}} </span></span> </p>
+            <span class="label label-default marginRight1">{{label.Name}} </span></span> </p>
     <p><span class="text-success">Priorities: </span>
         <span ng-repeat="priority in project.Priorities">
-            <span class="label label-success marginRight1">{{priority.Name}} </span></span> </p>
+            <span class="label label-default marginRight1">{{priority.Name}} </span></span> </p>
+
+    <!--TODO SET LINKS TO THE BUTTONS-->
+
+    <div>
+        <hr>
+        <a ng-show="isAuthor"  ng-click="editProject()" class="btn btn-success btn-xs marginBottom5">Edit Project</a>
+        <a ng-show="isAuthor" href="#" class="btn btn-success btn-xs marginBottom5">Add New Issue</a>
+        <hr>
+    </div>
 </div>
 
 <!--Project Issues part -->

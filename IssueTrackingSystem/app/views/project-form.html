@@ -1,0 +1,79 @@
+<form name="projectForm" class="form-horizontal" ng-show="isLoadedData">
+    <fieldset>
+        <!-- From scope to get edit or create new project -->
+        <legend>{{formType}}</legend>
+
+        <!--Project Name-->
+        <div class="form-group">
+            <label for="projectName" class="col-lg-2 control-label">Name</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="projectName" placeholder="Project Name"
+                       ng-model="project.Name" required="required">
+            </div>
+        </div>
+
+        <!--Project Description-->
+        <div class="form-group">
+            <label for="inputDescription" class="col-lg-2 control-label">Description</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="inputDescription" placeholder="Project Description"
+                          ng-model="project.Description" required="required"></textarea>
+            </div>
+        </div>
+
+        <!--Project Key-->
+        <div class="form-group">
+            <label for="inputKey" class="col-lg-2 control-label">Key</label>
+            <div class="col-lg-10">
+                <input  type="text" class="form-control" id="inputKey" placeholder="Project Key"
+                       ng-model="project.ProjectKey" ng-disabled="isDisabled" required>
+            </div>
+        </div>
+
+
+        <!--Project Leader-->
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Project Leader</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="select"  required="required"
+                        ng-model="project.Lead.Id" ng-disabled="!currentUser.isAdmin">
+                    <option ng-repeat="user in users"
+                            ng-selected="user.Username == project.Lead.Username"
+                            value="{{user.Id}}"> {{user.Username}}
+                    </option>
+                    <option selected="selected">{{project.Lead.Username}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Project Priorities-->
+        <div class="form-group">
+            <label for="projectPriorities" class="col-lg-2 control-label">Priorities</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="projectPriorities" placeholder="Project priorities, separated by coma"
+                       ng-model="project.PrioritiesStr" required="required">
+            </div>
+        </div>
+
+        <!--Project Labels-->
+        <div class="form-group">
+            <label for="projectLabels" class="col-lg-2 control-label">Labels</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="projectLabels" placeholder="Project labels, separated by coma"
+                       ng-model="project.LabelsStr" required="required">
+            </div>
+        </div>
+
+
+        <!--Buttons-->
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Add Issue</button>
+                <button type="submit" class="btn btn-primary"
+                        ng-disabled="projectForm.$invalid"
+                        ng-click="saveChanges(project)"
+                        >Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

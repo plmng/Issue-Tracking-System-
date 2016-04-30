@@ -3,8 +3,8 @@
 angular
     .module('IssueTracker')
     .controller('MainController', [
-        '$scope','$route', '$location','authenticationService', 'identityService',
-        function MainController($scope, $route, $location, authenticationService, identityService){
+        '$scope','$route', '$location','authenticationService', 'identityService','notifyService',
+        function MainController($scope, $route, $location, authenticationService, identityService, notifyService){
             var _reload = function(){
                 window.location.reload();
             };
@@ -23,6 +23,7 @@ angular
                     $scope.currentUser = user;
                     $scope.isAuthenticated = true;
                     $scope.isAdmin = user.isAdmin;
+              //      $scope.$broadcast('currentUser', $scope.currentUser);
                 });
 
             $scope.isAuthenticated = authenticationService.isAuthenticated();
@@ -30,6 +31,7 @@ angular
             $scope.register = function(user){
                 authenticationService.registerUser(user)
                     .then(function (registeredUser){
+                        notifyService.success('REGISTERED');
                         _reload();
                     });
             };
@@ -38,15 +40,26 @@ angular
                 console.log(user);
                 authenticationService.loginUser(user)
                     .then(function(loggedInUser){
+                        notifyService.success('LOGGED IN');
                         _reload();
+
                     });
             };
 
             $scope.logout = function(){
                 authenticationService.logoutUser();
+                notifyService.success('LOGGED OUT');
                 _reload();
 
             };
+
+            $scope.changePass = function(passData){
+                identityService.changePassword(passData).then(function(response){
+                    notifyService.success('PASSWORD CHANGED');
+                    $location.path('/')
+                });
+
+            }
 
 
 
