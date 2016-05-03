@@ -44,16 +44,26 @@ angular
                 controller: 'MainController'
                 //TODO only for Admin
             });
+            $routeProvider.when('/issues/:id', {
+                templateUrl: 'app/views/issue-view.html',
+                controller: 'IssueDetailsController'
+            });
+            $routeProvider.when('/projects/:id/add-issue', {
+                templateUrl: 'app/views/issue-form.html',
+                controller: 'MainController'
+            });
+
+            $routeProvider.when('/issues/:id/edit', {
+                templateUrl: 'app/views/issue-form.html',
+                controller: 'MainController'
+            });
 
             /*
             $routeProvider.when('/projects/:id/add-issue', {
                 templateUrl: 'app/views/',
                 controller: ''
             });
-            $routeProvider.when('/issues/:id', {
-                templateUrl: 'app/views/',
-                controller: ''
-            });
+
             $routeProvider.when('/issues/:id/edit', {
                 templateUrl: 'app/views/',
                 controller: ''

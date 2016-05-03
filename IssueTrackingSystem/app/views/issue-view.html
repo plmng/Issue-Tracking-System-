@@ -1,0 +1,67 @@
+<div class="col-md-12">
+    <h3 class="col-md-10"><small>Issue: </small><span class="text-success">{{issue.Title}}</span> </h3>
+    <button ng-show="isProjectLeader "
+            ng-click="editIssue()" class="btn btn-success col-md-2">Edit Issue</button>
+</div>
+<hr class="col-md-12">
+
+<!-- Issue Passport part -->
+<div class="col-md-6">
+    <p><span class="text-success">Description: </span>{{issue.Description}}</p>
+    <p><span class="text-success">Issue Key: </span>{{issue.IssueKey}}</p>
+    <p><span class="text-success">Project: </span>{{issue.Project.Name}}</p>
+    <p><span class="text-success">Author: </span>{{issue.Author.Username}}</p>
+    <p><span class="text-success">Assignee: </span>{{issue.Assignee.Username}}</p>
+    <p><span class="text-success">Priority: </span>{{issue.Priority.Name}}</p>
+    <p><span class="text-success">Labels: </span>
+        <span ng-repeat="label in issue.Labels">
+            <span class="label label-default marginRight1">{{label.Name}} </span></span> </p>
+
+    <p><span class="text-success">Status: </span>{{issue.Status.Name}}</p>
+
+
+</div>
+
+<!--Issue Administrative part-->
+<div class="col-md-6">
+    <div class="marginBottom5"  ng-if="isAssignee"><span class="text-success">Change Issue status to Available Statuses: </span>
+        <span ng-repeat="availableStatus in issue.AvailableStatuses">
+            <button class="btn btn-success btn-xs marginRight1"
+                    ng-click="changeStatus(availableStatus.Id)">{{availableStatus.Name}}</button>
+        </span></div>
+    <div>
+    <div class="panel panel-success" ng-show="isAssignee || isProjectLeader">
+            <div class="panel-heading">
+                <h3 class="panel-title">new comment</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" name="addCommentForm">
+                    <fieldset>
+                        <textarea class="form-control marginBottom5" rows="3" ng-model="commentToAdd" required="required"></textarea>
+                        <div class="col-md-11 col-md-offset-9">
+                            <button class="btn btn-success btn-sm"
+                                    ng-disabled="addCommentForm.$invalid" ng-click="addComment()">Add comment</button>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="col-md-12">
+
+<!--Issue Comments part -->
+<h4 class="col-md-12"><small>{{issue.Title}} >> </small><span class="text-success">Comments</span> </h4>
+<div class="col-md-12">
+
+
+    <div ng-repeat="comment in comments">
+
+        <div class="panel panel-default">
+            <div class="panel-body">{{comment.Text}}</div>
+            <div class="panel-footer text-right  "><small>{{comment.Author.Username}} - {{comment.CreatedOn}}</small></div>
+        </div>
+    </div>
+</div>

@@ -26,22 +26,22 @@
 <!--Project Issues part -->
 <div class="col-md-10">
     <div class="well maxSized marginBottom0 " >
-        <table  ng-if="issuePresence" class="table table-striped">
+        <table  ng-if="issuePresence" class="table table-striped the-table">
             <thead>
                 <tr class="green">
-                    <td> <h4>Issue Title</h4></td>
-                    <td> <h4>Description</h4></td>
-                    <td class="nowrap"> <h4>Due Date</h4></td>
-                    <td class="nowrap"> <h4>Assignee</h4> </td>
+                    <td  class="col-md-2"> <h4>Issue Title</h4></td>
+                    <td  class="col-md-6"> <h4>Description</h4></td>
+                    <td  class="col-md-2"> <h4>Due Date</h4></td>
+                    <td  class="col-md-2"> <h4>Assignee</h4> </td>
                 </tr>
             </thead>
 
             <tbody>
                 <tr ng-repeat="issue in issues ">
-                    <td> {{issue.Title}} </td>
-                    <td> {{issue.Description}} </td>
-                    <td> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
-                    <td> {{issue.Assignee['Username']}} </td>
+                    <td class="col-md-2"> {{issue.Title}} </td>
+                    <td class="col-md-6"> {{issue.Description}} </td>
+                    <td class="col-md-2"> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
+                    <td class="col-md-2"> {{issue.Assignee['Username']}} </td>
 
                     <!-- Old table rows save for the functions
                     <td class="hoverable" ng-click="viewIssue(issue.Id)">{{issue.Title}}</td>

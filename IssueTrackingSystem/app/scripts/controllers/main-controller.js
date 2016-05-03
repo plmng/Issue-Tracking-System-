@@ -23,7 +23,7 @@ angular
                     $scope.currentUser = user;
                     $scope.isAuthenticated = true;
                     $scope.isAdmin = user.isAdmin;
-              //      $scope.$broadcast('currentUser', $scope.currentUser);
+                    $scope.$broadcast('currentUser', $scope.currentUser);
                 });
 
             $scope.isAuthenticated = authenticationService.isAuthenticated();

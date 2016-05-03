@@ -1,6 +1,10 @@
 .main-content{
 
 }
+.the-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
 .main-content-header{
     width: 95%;
     margin: 40px auto auto auto;
