@@ -10,8 +10,17 @@
                 <div class="form-group">
                     <label for="issueTitle" class="col-lg-2 control-label">Title</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="issueTitle"
-                               ng-model="issue.Title" required="required"  >
+                        <input type="text" class="form-control" id="issueTitle" required="required"
+                               ng-model="issue.Title" ng-disabled="!isProjectLeader" >
+                    </div>
+                </div>
+
+            <!--Project-->
+                <div class="form-group">
+                    <label for="issueProject" class="col-lg-2 control-label">Project</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="issueProject"
+                               ng-model="issue.Project.Name" disabled="disabled" >
                     </div>
                 </div>
 
@@ -19,8 +28,8 @@
                 <div class="form-group">
                     <label for="issueDescription" class="col-lg-2 control-label">Description</label>
                     <div class="col-lg-10">
-                        <textarea class="form-control" rows="3" id="issueDescription"
-                                  ng-model="issue.Description" required="required"></textarea>
+                        <textarea class="form-control" rows="3" id="issueDescription" required="required"
+                                  ng-model="issue.Description" ng-disabled="!isProjectLeader"></textarea>
                     </div>
                 </div>
 
@@ -28,24 +37,9 @@
                 <div class="form-group">
                     <label for="issueDueDate" class="col-lg-2 control-label">Due Date</label>
                     <div class="col-lg-10">
-                        <input type="date" class="form-control" id="issueDueDate"
-                               ng-model="issue.DueDate" required="required"  >
-                    </div>
-                </div>
-
-            <!--Projects-->
-                <div class="form-group">
-                    <label for="projects" class="col-lg-2 control-label">Project</label>
-                    <div class="col-lg-10">
-                        <select class="form-control" id="projects"
-                        ng-model="issue.ProjectId">
-                            <option ng-repeat="project in projects"
-                                    ng-selected="project.Id == currentProjectId"
-                                    value="{{project.Id}}"> {{project.Title}}
-                            </option>
-                            <option selected="selected">{{currentProjectId}}</option>
-                        </select>
-                        <br>
+                        <!-- ng-model="issue.DueDateStr" -->
+                        <input type="date" class="form-control" id="issueDueDate" required="required"
+                               ng-model="issue.DueDateDate" ng-disabled="!isProjectLeader"  >
                     </div>
                 </div>
 
@@ -54,12 +48,12 @@
                     <label for="users" class="col-lg-2 control-label">Assignee</label>
                     <div class="col-lg-10">
                         <select class="form-control" id="users"
-                                ng-model="issue.ProjectId">
+                                ng-model="issue.Assignee.Id"
+                                ng-disabled="!isProjectLeader">
                             <option ng-repeat="user in users"
-                                    ng-selected="user.Id == currentProjectId"
+                                    ng-selected="user.Id == issue.Assignee.Id"
                                     value="{{user.Id}}"> {{user.Username}}
                             </option>
-                            <option selected="selected">{{currentProjectId}}</option>
                         </select>
                         <br>
                     </div>
@@ -70,12 +64,13 @@
                     <label for="priorities" class="col-lg-2 control-label">Priority</label>
                     <div class="col-lg-10">
                         <select class="form-control" id="priorities"
-                                ng-model="issue.PriorityId">
+                                ng-model="issue.Priority.Id"
+                                ng-disabled="!isProjectLeader">
                             <option ng-repeat="priority in priorities"
-                                    ng-selected="priority.Id == currentProjectId"
+                                    ng-selected="priority.Id == issue.Priority.Id"
                                     value="{{priority.Id}}"> {{priority.Name}}
                             </option>
-                            <option selected="selected">{{currentProjectId}}</option>
+
                         </select>
                         <br>
                     </div>
@@ -83,13 +78,47 @@
 
             <!--Labels-->
                 <div class="form-group">
-                    <label for="issuePriorities" class="col-lg-2 control-label">Title</label>
+                    <label for="issueLables" class="col-lg-2 control-label">Labels</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="issuePriorities"
-                               ng-model="issue.Priorities" required="required"  >
+                        <input type="text" class="form-control" id="issueLables"
+                               placeholder="Project labels, separated by coma"
+                               ng-disabled="!isProjectLeader"
+                               ng-model="issue.LabelsStr" required="required">
                     </div>
                 </div>
 
+            <!--Author-->
+                <div class="form-group">
+                    <label for="issueAuthor" class="col-lg-2 control-label">Author</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="issueAuthor"
+                               ng-model="issue.Author.Username" disabled="disabled"  >
+                    </div>
+                </div>
+
+            <!--Status-->
+                <div class="form-group">
+                    <label for="issueStatus" class="col-lg-2 control-label">Currant Status</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="issueStatus"
+                               ng-model="issue.Status.Name" disabled="disabled"  >
+                    </div>
+                </div>
+
+            <!--Change Status-->
+                <div class="form-group">
+                    <label for="changeStatus" class="col-lg-2 control-label">ChangeStatus</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="changeStatus"
+                                ng-model="issue.newStatus">
+                            <option value="">Select some of available statuses to change curent</option>
+                            <option ng-repeat="availableStatus in issue.AvailableStatuses"
+                                    value="{{availableStatus.Id}}"> {{availableStatus.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <br>
                 <button class="btn btn-success" ng-disabled="issueForm.$invalid" ng-click="save(issue)">Save</button>
                 <br>
             </fieldset>
