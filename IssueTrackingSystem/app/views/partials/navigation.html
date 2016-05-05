@@ -12,13 +12,12 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav">
-                <li ng-if="isAdmin" ng-class="activeLink==='adm-allProjects' ? 'active' : ''" >
-                    <a class="btn btn-success " ng-click="setActiveLink('adm-allProjects')" ng-href="#/projects">View All Projects </a></li>
-                <li ng-if="isAdmin" ng-class="activeLink==='adm-addProject' ? 'active' : ''" >
-                    <a ng-click="setActiveLink('adm-addProject')" ng-href="#/projects/add">Add New Project</a></li>
+                <li> <a ng-href="#/">Dashboard</a></li>
+                <li ng-if="isAdmin"> <a ng-href="#/projects">View All Projects </a></li>
+                <!--<li ng-if="isAdmin"> <a ng-href="#/projects/add">Add New Project</a></li>-->
+                <li ng-if="isAdmin"> <a class="btn btn-success" ng-click="openAddProjectModal()" >Add New Project</a></li>
 
             </ul>
-
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

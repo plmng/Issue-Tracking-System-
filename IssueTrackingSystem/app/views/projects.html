@@ -22,17 +22,18 @@
             <tbody>
 
             <tr ng-if="!searchedName" ng-repeat="project in projects | orderBy: project.Id">
-                <td> {{project.Name}} </td>
+                <td><a href="/#/projects/{{project.Id}}">{{project.Name}}</a> </td>
                 <td> {{project.Description}} </td>
                 <td> {{project.Lead['Username']}} </td>
                 <td>
                     <button class="btn btn-primary btn-xs"
                             ng-click="editProject(project.Id)">Edit project</button>
-                    <button class="btn btn-primary btn-xs">Add Issue</button>
+                    <button class="btn btn-success btn-xs"
+                            ng-click="openAddIssueToProjectModal(project)">Add Issue</button>
                 </td>
             </tr>
             <tr ng-if="searchedName" ng-repeat="project in projects | orderBy: project.Id | filter:searchedName">
-                <td> {{project.Name}} </td>
+                <td><a href="/#/projects/{{project.Id}}">{{project.Name}}</a> </td>
                 <td> {{project.Description}} </td>
                 <td> {{project.Lead['Username']}} </td>
                 <td>

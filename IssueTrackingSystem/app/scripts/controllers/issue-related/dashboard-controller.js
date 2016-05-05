@@ -5,21 +5,21 @@ angular
         '$scope',
         '$location',
         'issueService',
-        'PAGE_SIZE',
-        function DashboardController($scope, $location, issueService, PAGE_SIZE){
+        'DASHBOARD_ISSUE_PAGE_SIZE',
+        function DashboardController($scope, $location, issueService, DASHBOARD_ISSUE_PAGE_SIZE){
             //note: zaqwkata wryshta samo po stranici, a ne wsichki zaqweni issues:
             var projects = [];
-            $scope.itemsPerPage = PAGE_SIZE;
+            $scope.itemsPerPage = DASHBOARD_ISSUE_PAGE_SIZE;
             $scope.currentPage = 1;
 
             $scope.orderedBy = 'DueDate';
             $scope.reverse = true;
-            /*
+          /*
             $scope.order = function(orderedBy){
                 $scope.reverse = ($scope.orderedBy === orderedBy) ? !$scope.reverse : false;
                 $scope.orderedBy = orderedBy;
             };
-            */
+*/
 
             $scope.pageChanged = function(newPage){
                 console.log(newPage);
@@ -32,7 +32,7 @@ angular
                 issueService.getAssignedIssues($scope.currentPage,  $scope.orderedBy)
                     .then(function(issuesData){
                         $scope.issues = issuesData['Issues'];
-                        $scope.totalItems = issuesData.TotalPages * PAGE_SIZE;
+                        $scope.totalItems = issuesData.TotalPages * DASHBOARD_ISSUE_PAGE_SIZE;
                         $scope.issuePresence = $scope.issues.length > 0;
                         $scope.loaded = true;
                     })

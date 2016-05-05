@@ -13,7 +13,7 @@ angular
         'BASE_URL',
         function identityService($http, $q, $location, BASE_URL){
             var deferred = $q.defer();
-            var currentUser = undefined;
+        //    var currentUser = undefined;
 
             /*
             * @name getCurrentUser
@@ -21,11 +21,9 @@ angular
             */
             // TODO: current user data can be stored in localStorage and to read them from there
             function getCurrentUser(){
+                var currentUser = sessionStorage['currentUser'];
                 if (currentUser) {
-                    return $q.when(currentUser);
-                }
-                else {
-                    return deferred.promise;
+                    return JSON.parse(sessionStorage['currentUser']);
                 }
             }
 
@@ -34,7 +32,7 @@ angular
             * @desc removes currentUser data
             */
             function removeCurrentUserData(){
-                currentUser = undefined;
+                delete sessionStorage['currentUser'];
             }
 
             /*
@@ -46,9 +44,8 @@ angular
 
                 $http.get(BASE_URL + 'Users/me')
                     .then(function(response) {
-                        currentUser = response.data;
-                        console.log(currentUser);
-                        deferred.resolve(currentUser);
+                        sessionStorage['currentUser'] = JSON.stringify(response.data);
+                        deferred.resolve(response.data);
                         currentUserDataDeferred.resolve();
                     });
 
@@ -60,7 +57,6 @@ angular
 
                 $http.post(BASE_URL + 'api/Account/ChangePassword', passData)
                     .then(function(response){
-                        response['customMsg'] = "successfully changed password";
                         deferred.resolve(response);
                     });
 
@@ -68,16 +64,12 @@ angular
             }
 
 
-            function isAdmin(){
-                //TODO: write function
-                return false;
-            }
+
 
             return {
                 getCurrentUser : getCurrentUser,
                 loadCurrentUserData : loadCurrentUserData,
                 removeCurrentUserData : removeCurrentUserData,
-                isAdmin : isAdmin,
                 changePassword : changePassword
             }
         }

@@ -3,10 +3,10 @@
 angular
     .module('IssueTracker')
     .controller('ProjectAllController', [
-        '$scope', '$routeParams', '$location','projectService','PAGE_SIZE',
-        function ProjectAllController($scope, $routeParams, $location, projectService, PAGE_SIZE ){
+        '$scope', '$routeParams', '$location','$uibModal','projectService', 'userService', 'DASHBOARD_PROJECTS_PAGE_SIZE',
+        function ProjectAllController($scope, $routeParams, $location, $uibModal, projectService, userService, DASHBOARD_PROJECTS_PAGE_SIZE ){
 
-            $scope.itemsPerPage = PAGE_SIZE;
+            $scope.itemsPerPage = DASHBOARD_PROJECTS_PAGE_SIZE;
             $scope.currentPage = 1;
 
 
@@ -29,11 +29,30 @@ angular
                         console.log('projects-all-controller');
                         console.log(projectsData);
                         $scope.projects = projectsData.Projects;
-                        $scope.totalItems = projectsData.TotalPages * PAGE_SIZE;
+                        $scope.totalItems = projectsData.TotalPages * DASHBOARD_PROJECTS_PAGE_SIZE;
                         $scope.projectsPresence = $scope.projects.length > 0;
                         $scope.loaded = true;
                     })
             }
+
+            $scope.openAddIssueToProjectModal = function(project){
+
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: '/app/views/issue-add.html',
+                    controller: 'IssueAddController',
+                    resolve:{
+                        usersForAssignees: userService.getAllUsers(function(users){
+                            console.log('modal add issue - users');
+                            console.log(users);
+                            return users;
+                        }),
+                        currentProject:project,
+                        allProjects:projectService.getAllProjects()
+                    }
+                });
+            };
+
 
             getAllProjects();
         }

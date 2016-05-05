@@ -1,8 +1,7 @@
 <!-- Login/Register form if not Authenticated-->
-<div ng-if="!isAuthenticated" class="row">
-
+<div ng-if="!isAuthenticated" class="row ">
     <div  class = "col-md-10 col-md-offset-1 border" >
-        <div class="panel panel-primary">
+        <div class="panel panel-success marginTop100">
             <div class="panel-heading">
                 <h1 class="panel-title">Issue Tracking System</h1>
             </div>
@@ -16,18 +15,24 @@
 
 <!-- Dashboard/Projects if Authenticated-->
 <div class="row" ng-if="isAuthenticated" >
+    <div class="col-md-12">
+        <p class="text-success text-capitalize text-right"> <em>Dashboard page</em></p>
+    </div>
 
+    <!--Projects-->
     <div class="col-md-3">
+
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title">My Projects</h3>
             </div>
-            <div user-projects ></div>
+            <div all-user-related-projects></div>
         </div>
     </div>
 
-
+    <!--Issues-->
     <div class="col-md-9">
+
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title">My Issues</h3>

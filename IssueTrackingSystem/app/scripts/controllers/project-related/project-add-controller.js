@@ -3,9 +3,68 @@
 angular
     .module('IssueTracker')
     .controller('ProjectAddController', [
-        '$scope', '$routeParams', '$location', 'projectService','stringifyService','userService',
-        function ProjectAddController($scope, $routeParams, $location, projectService, stringifyService, userService) {
+        '$scope',
+        '$location',
+        '$uibModalInstance',
+        'notifyService',
+        'projectService',
+        'usersForLeads',
+        'labels',
+        function ProjectAddController($scope,$location,$uibModalInstance,notifyService,projectService,usersForLeads,labels) {
             console.log('projects add controller loaded');
+            $scope.usersForLeads = usersForLeads;
+            $scope.allLabels = labels;
+
+            $scope.currentLabels = [];
+
+            $scope.cancel = function(){
+                $uibModalInstance.dismiss('cancel');
+            };
+
+            $scope.addLabel = function(label){
+                if(label!== undefined && label!='') {
+
+                    $scope.currentLabels.push({
+                        Name: label
+                    });
+                    $scope.label = '';
+                }
+            };
+
+            $scope.addNewProject = function(projectData){
+
+                var project = {
+                    Name:projectData.Name,
+                    Description:projectData.Description,
+                    ProjectKey:projectData.ProjectKey,
+                    LeadId:projectData.Lead.Id,
+                    Labels:$scope.currentLabels
+                };
+
+                if(projectData.Priorities){
+                    project.Priorities =projectData.Priorities.split(',').map(function(pr){
+                        return{
+                            Name: pr.trim()
+                        }
+                    })
+                }else{
+                    project.Priorities = [];
+                }
+                projectService.addNewProject(JSON.stringify(project),function(){
+                    $uibModalInstance.close();
+                    $location.path('/projects');
+                    notifyService.success('project created');
+
+                },function(){
+                    $uibModalInstance.close();
+                    $location.path('/projects');
+                    notifyService.error('project not created');
+                })
+            };
+
+
+
+
          //   $scope.formType = 'Add project';
            // $scope.isDisabled = true;
            // $scope.isLoadedData = true;

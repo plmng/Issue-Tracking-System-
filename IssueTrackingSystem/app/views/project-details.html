@@ -1,6 +1,11 @@
+<!--Page header-->
+<div class="col-md-12">
+    <p class="text-success text-capitalize text-right"> <em>Project Details Page</em></p>
+</div>
+
 <!-- Project Passport part -->
-<div class="col-md-2">
-    <h3><small>Project:</small> </h3>
+<div class="col-md-3">
+    <!--<h3><small>Project:</small> </h3>-->
     <h3><span class="text-success">{{project.Name}}</span></h3>
     <hr>
     <p><span class="text-success">Description: </span>{{project.Description}}</p>
@@ -24,7 +29,7 @@
 </div>
 
 <!--Project Issues part -->
-<div class="col-md-10">
+<div class="col-md-9">
     <div class="well maxSized marginBottom0 " >
         <table  ng-if="issuePresence" class="table table-striped the-table">
             <thead>
@@ -52,6 +57,7 @@
             </tbody>
 
         </table>
+        <h3 ng-if="!issuePresence" class="text-success text-center"> There are no issues in this project </h3>
     </div>
 </div>
 

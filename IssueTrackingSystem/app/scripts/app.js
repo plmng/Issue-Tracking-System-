@@ -3,12 +3,14 @@
 angular
     .module('IssueTracker', [
         'ngRoute',
+        'angular-linq',
         'angular-loading-bar',
         'ui.bootstrap',
         'ngCookies'
     ])
     .constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
-    .constant('PAGE_SIZE', 5)
+    .constant('DASHBOARD_ISSUE_PAGE_SIZE', 5)
+    .constant('DASHBOARD_PROJECTS_PAGE_SIZE', 7)
     .constant('toastr', toastr)
     //exec before registration of angular modules, controllers, services
     .config([
@@ -20,12 +22,12 @@ angular
                 //TODO:only for authorised
             });
             $routeProvider.when('/projects/:id', {
-                templateUrl: 'app/views/project.html',
-                controller: 'ProjectController'
+                templateUrl: 'app/views/project-details.html',
+                controller: 'ProjectDetailsController'
                 //TODO:only for authorised and check for all restrictions
             });
             $routeProvider.when('/projects/:id/edit', {
-                templateUrl: 'app/views/project-form.html',
+                templateUrl: 'app/views/project-edit.html',
                 controller: 'ProjectEditController'
                 //TODO only for projectLeader and Admin
             });
@@ -34,31 +36,33 @@ angular
                 controller: 'ProjectAllController'
                 //TODO only for Admin
             });
-            $routeProvider.when('/projects/add', {
-                templateUrl: 'app/views/project-form.html',
-                controller: 'ProjectAddController'
-                //TODO only for Admin
-            });
+
             $routeProvider.when('/profile/password', {
                 templateUrl: 'app/views/user-change-password.html',
                 controller: 'MainController'
                 //TODO only for Admin
             });
             $routeProvider.when('/issues/:id', {
-                templateUrl: 'app/views/issue-view.html',
+                templateUrl: 'app/views/issue-details.html',
                 controller: 'IssueDetailsController'
             });
             $routeProvider.when('/projects/:id/add-issue', {
                 templateUrl: 'app/views/issue-form.html',
-                controller: 'MainController'
+                controller: 'IssueAddController'
             });
 
             $routeProvider.when('/issues/:id/edit', {
                 templateUrl: 'app/views/issue-form.html',
-                controller: 'MainController'
+                controller: 'IssueEditController'
             });
 
             /*
+             $routeProvider.when('/projects/add', {
+             templateUrl: 'app/views/project-add.html',
+             controller: 'ProjectAddController'
+             //TODO only for Admin
+             });
+
             $routeProvider.when('/projects/:id/add-issue', {
                 templateUrl: 'app/views/',
                 controller: ''

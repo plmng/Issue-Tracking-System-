@@ -1,0 +1,100 @@
+<div class="col-md-8 col-md-offset-2">
+<div class = "panel panel-success ">
+    <div class="panel-heading">
+        <h3 class="panel-title">Issue Data</h3>
+    </div>
+    <div class="panel-body">
+        <form name="issueForm"  class="form-horizontal">
+            <fieldset>
+            <!--Title-->
+                <div class="form-group">
+                    <label for="issueTitle" class="col-lg-2 control-label">Title</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="issueTitle"
+                               ng-model="issue.Title" required="required"  >
+                    </div>
+                </div>
+
+            <!--Description-->
+                <div class="form-group">
+                    <label for="issueDescription" class="col-lg-2 control-label">Description</label>
+                    <div class="col-lg-10">
+                        <textarea class="form-control" rows="3" id="issueDescription"
+                                  ng-model="issue.Description" required="required"></textarea>
+                    </div>
+                </div>
+
+            <!--Due Date Picker-->
+                <div class="form-group">
+                    <label for="issueDueDate" class="col-lg-2 control-label">Due Date</label>
+                    <div class="col-lg-10">
+                        <input type="date" class="form-control" id="issueDueDate"
+                               ng-model="issue.DueDate" required="required"  >
+                    </div>
+                </div>
+
+            <!--Projects-->
+                <div class="form-group">
+                    <label for="projects" class="col-lg-2 control-label">Project</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="projects"
+                        ng-model="issue.ProjectId">
+                            <option ng-repeat="project in projects"
+                                    ng-selected="project.Id == currentProjectId"
+                                    value="{{project.Id}}"> {{project.Title}}
+                            </option>
+                            <option selected="selected">{{currentProjectId}}</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+
+            <!--AssigneeId-->
+                <div class="form-group">
+                    <label for="users" class="col-lg-2 control-label">Assignee</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="users"
+                                ng-model="issue.ProjectId">
+                            <option ng-repeat="user in users"
+                                    ng-selected="user.Id == currentProjectId"
+                                    value="{{user.Id}}"> {{user.Username}}
+                            </option>
+                            <option selected="selected">{{currentProjectId}}</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+
+            <!--Priority-->
+                <div class="form-group">
+                    <label for="priorities" class="col-lg-2 control-label">Priority</label>
+                    <div class="col-lg-10">
+                        <select class="form-control" id="priorities"
+                                ng-model="issue.PriorityId">
+                            <option ng-repeat="priority in priorities"
+                                    ng-selected="priority.Id == currentProjectId"
+                                    value="{{priority.Id}}"> {{priority.Name}}
+                            </option>
+                            <option selected="selected">{{currentProjectId}}</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+
+            <!--Labels-->
+                <div class="form-group">
+                    <label for="issuePriorities" class="col-lg-2 control-label">Title</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="issuePriorities"
+                               ng-model="issue.Priorities" required="required"  >
+                    </div>
+                </div>
+
+                <button class="btn btn-success" ng-disabled="issueForm.$invalid" ng-click="save(issue)">Save</button>
+                <br>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</div>
+

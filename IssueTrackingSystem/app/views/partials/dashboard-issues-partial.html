@@ -2,26 +2,20 @@
     <table  ng-if="issuePresence" class="table table-striped">
         <thead>
             <tr class="green">
-                <td> <h4>Issue Title</h4></td>
-                <td> <h4>Description</h4></td>
-                <td> <h4>Project</h4> </td>
-                <td> <h4>Due Date</h4></td>
+                <td class="col-md-2"> <h4>Issue Title</h4></td>
+                <td class="col-md-4"> <h4>Description</h4></td>
+                <td class="col-md-2"> <h4>Project</h4> </td>
+                <td class="col-md-2"> <h4>Due Date</h4></td>
             </tr>
 
         </thead>
 
         <tbody>
-            <tr ng-repeat="issue in issues | orderBy:orderedBy:reverse">
-                <td> {{issue.Title}} </td>
+            <tr ng-repeat="issue in issues">
+                <td><a href="/#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
                 <td> {{issue.Description}} </td>
                 <td> {{issue.Project['Name']}} </td>
                 <td> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
-
-                <!-- Old table rows save for the functions
-                <td class="hoverable" ng-click="viewIssue(issue.Id)">{{issue.Title}}</td>
-                <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project['Name']}}</td>
-                <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
-                -->
             </tr>
         </tbody>
     </table>

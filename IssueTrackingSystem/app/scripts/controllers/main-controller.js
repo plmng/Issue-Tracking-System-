@@ -3,30 +3,19 @@
 angular
     .module('IssueTracker')
     .controller('MainController', [
-        '$scope','$route', '$location','authenticationService', 'identityService','notifyService',
-        function MainController($scope, $route, $location, authenticationService, identityService, notifyService){
+        '$scope','$route', '$location','$uibModal','authenticationService', 'identityService','notifyService','userService','labelService',
+        function MainController( $scope, $route, $location,$uibModal, authenticationService, identityService, notifyService, userService, labelService){
             var _reload = function(){
                 window.location.reload();
             };
 
-            /*
-            * $scope.activeLink - prop. holds the name of li to be shown as active
-            * $scope.setActiveLink - func - set the current opened link
-            */
-            $scope.activeLink = '';
-            $scope.setActiveLink=function(link){
-                $scope.activeLink = link;
-            };
-
-            identityService.getCurrentUser()
-                .then(function(user){
-                    $scope.currentUser = user;
-                    $scope.isAuthenticated = true;
-                    $scope.isAdmin = user.isAdmin;
-                    $scope.$broadcast('currentUser', $scope.currentUser);
-                });
-
+           var currentUser = identityService.getCurrentUser();
             $scope.isAuthenticated = authenticationService.isAuthenticated();
+            if(currentUser){
+                $scope.isAdmin = currentUser.isAdmin;
+                $scope.currentUser = currentUser;
+            }
+
 
             $scope.register = function(user){
                 authenticationService.registerUser(user)
@@ -37,7 +26,6 @@ angular
             };
 
             $scope.login = function(user){
-                console.log(user);
                 authenticationService.loginUser(user)
                     .then(function(loggedInUser){
                         notifyService.success('LOGGED IN');
@@ -61,8 +49,23 @@ angular
 
             }
 
-
-
+            $scope.openAddProjectModal = function(){
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: '/app/views/project-add.html',
+                    controller: 'ProjectAddController',
+                    resolve: {
+                        usersForLeads: userService.getAllUsers(function(users){
+                            return users.data.filter(function (usr) {
+                                return usr.Username !== currentUser.Username
+                            });
+                        }),
+                        labels:labelService.getAllLabels(function(succes){
+                            return succes.data;
+                        })
+                    }
+                });
+            };
 
 
 

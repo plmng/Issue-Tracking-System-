@@ -28,16 +28,21 @@ angular
             * @desc execute request for user registration and on success calls loginUser function
             */
             function registerUser(user){
+                console.log(user);
                 var deferred = $q.defer();
 
                 $http.post(BASE_URL + 'api/Account/Register', user)
-                    .then(function(response) {
+                    .then(function(response){
+                        console.log(response);
                         var loginData = {
-                            Username : user.email,
-                            Password : user.password
+                            Username : user.Email,
+                            Password : user.Password
                         };
-                        loginUser(loginData);
-                        deferred.resolve(response.data)
+                        console.log(loginData);
+                        loginUser(loginData)
+                            .then(function(response){
+                                deferred.resolve(response.data)
+                            });
                     });
                 return deferred.promise;
             }

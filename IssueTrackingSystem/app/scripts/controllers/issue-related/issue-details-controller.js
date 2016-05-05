@@ -3,11 +3,9 @@
 angular
     .module('IssueTracker')
     .controller('IssueDetailsController', [
-        '$scope','$routeParams', '$location', 'notifyService', 'issueService','$route',
-        function IssueDetailsController($scope, $routeParams, $location, notifyService, issueService, $route){
-            $scope.$on('currentUser', function(event, currentUser) {
-                $scope.currentUser = currentUser;
-            });
+        '$scope','$routeParams', '$location','$route', 'notifyService', 'issueService','identityService',
+        function IssueDetailsController($scope, $routeParams, $location,$route, notifyService, issueService,identityService ){
+            var currentUser = identityService.getCurrentUser();
             var issueId = $routeParams.id;
             var isAllLoaded = false;
 
@@ -24,20 +22,12 @@ angular
                     .then(function(issueDetails){
                         $scope.issue = issueDetails;
                         console.log($scope.issue);
-                        $scope.isAssignee = issueDetails.Assignee.Username ===  $scope.currentUser.Username;
-                        $scope.isProjectLeader = issueDetails.Author['Username'] ===  $scope.currentUser.Username;
-                        $scope.isAdmin =  $scope.currentUser.isAdmin;
+                        $scope.isAssignee = issueDetails.Assignee.Username ===  currentUser.Username;
+                        $scope.isProjectLeader = issueDetails.Author['Username'] ===  currentUser.Username;
+                        $scope.isAdmin =  currentUser.isAdmin;
                         isAllLoaded = true;
-
-                        //console.log('is assignee: ', $scope.isAssignee);
-                        //console.log('is project leader: ', $scope.isProjectLeader);
-                        //console.log('is admin: ', $scope.isAdmin);
                     })
             }
-
-
-
-
 
             $scope.changeStatus = function(statusId){
                 console.log(statusId);
@@ -51,17 +41,15 @@ angular
             };
 
             $scope.addComment = function(){
-                console.log($scope.commentToAdd);
                 var commentToAdd = {
                     Text: $scope.commentToAdd
                 };
-                $scope.comments = issueService.addComment(issueId, commentToAdd).then(function(){
-                    notifyService.success("comment added");
-                    $route.reload();
-                });
-
+                $scope.comments = issueService.addComment(issueId, commentToAdd)
+                    .then(function(){
+                        notifyService.success("comment added");
+                        $route.reload();
+                    });
             };
-
 
             getAllComments();
             getIssueDetails();

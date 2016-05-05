@@ -4,29 +4,32 @@ angular
     .factory('projectService', [
         '$http',
         '$q',
+        '$linq',
         'identityService',
-        'PAGE_SIZE',
+        'DASHBOARD_PROJECTS_PAGE_SIZE',
         'BASE_URL',
-        function projectService($http, $q, identityService, PAGE_SIZE, BASE_URL){
+        function projectService($http, $q, $linq, identityService, DASHBOARD_PROJECTS_PAGE_SIZE, BASE_URL){
+            var currentUser = identityService.getCurrentUser();
 
             function getProjectsByUserId(pageNumber){
                 var deferred = $q.defer();
-
-                identityService.getCurrentUser()
-                    .then(function(user){
-                        var idFilter = 'Lead.Id="'+user.Id+'"';
-                        getProjectByFilter(pageNumber, idFilter)
-                            .then(function (response){
-                               deferred.resolve(response);
-                            })
+                var idFilter = 'Lead.Id="'+currentUser.Id+'"';
+                getProjectByFilter(pageNumber, idFilter)
+                    .then(function (response){
+                        deferred.resolve(response);
                     });
+
                 return deferred.promise;
             }
 
-            function getProjectByFilter(pageNumber, filter){
-
+            function getProjectByFilter(pageNumber, filter, fixedPageSize){
                 var deferred = $q.defer();
-                var itemsPerPage = PAGE_SIZE + 2;
+                var itemsPerPage;
+                if(fixedPageSize == undefined){
+                    itemsPerPage = DASHBOARD_PROJECTS_PAGE_SIZE
+                }else{
+                    itemsPerPage = fixedPageSize;
+                }
 
                 $http.get(BASE_URL + 'projects?filter=' + filter + '&pageSize=' + itemsPerPage + '&pageNumber='+ pageNumber)
                     .then(function(response){
@@ -96,13 +99,91 @@ angular
                 return deferred.promise;
             }
 
+
+            function getAllUserRelatedProjects(pageNumber){
+                var deferred = $q.defer();
+                var maxPageSize = 2147483646;
+
+                    _getAllProjectsOfAssignedIssues(maxPageSize, 1)
+                        .then(function(projectsFromAssignedIssues){
+                            var idFilter = 'Lead.Id="'+currentUser.Id+'"';
+                            getProjectByFilter(1, idFilter, maxPageSize)
+                                .then(function (response){
+                                    var leadedProjects = response.Projects;
+
+                                    var allUserRelatedProjects = $linq.Enumerable()
+                                        .From(leadedProjects)
+                                        .Union(projectsFromAssignedIssues)
+                                        .Distinct(function (x) {
+                                            return x.Id;
+                                        })
+                                        .ToArray();
+                                    allUserRelatedProjects.sort(function(a,b){
+                                        var nameA = a.Name.toLowerCase();
+                                        var nameB = b.Name.toLowerCase();
+                                        if (nameA < nameB)
+                                            return -1;
+                                        if (nameA > nameB)
+                                            return 1;
+                                        return 0
+                                    });
+
+                                    deferred.resolve(allUserRelatedProjects);
+                                });
+                        });
+                    return deferred.promise;
+            }
+
+            function _getAllProjectsOfAssignedIssues(pageSize,pageNumber){
+                var deferred = $q.defer();
+
+                $http.get(BASE_URL + 'issues/me?orderBy=DueDate desc, IssueKey&pageSize='+pageSize+'&pageNumber='+pageNumber)
+                    .then(function(response){
+                        var assignedIssues = response.data.Issues;
+
+                        var projectsOfAssignedIssues = $linq.Enumerable()
+                            .From(assignedIssues)
+                            .Select(function (x) {
+                                return {
+                                    Id: x.Project.Id,
+                                    Name: x.Project.Name
+                                };
+                            })
+                            .Distinct(function (x) {
+                                return x.Id;
+                            })
+                            .ToArray();
+
+                        deferred.resolve(projectsOfAssignedIssues)
+                    });
+                return deferred.promise;
+            }
+
+            function addNewProject(project, succes, error) {
+                return $http.post(BASE_URL + 'projects',project,{
+                        headers: {'Content-Type': 'application/json'}
+                    })
+                    .then(succes, error);
+            }
+
+            function getAllProjects() {
+                var deferred = $q.defer();
+                $http.get(BASE_URL + 'projects')
+                    .then(function(response){
+                        deferred.resolve(response.data)
+                    });
+                return deferred.promise;
+            }
             return{
                 getProjectByFilter : getProjectByFilter,
                 getProjectsByUserId : getProjectsByUserId,
                 getProjectById : getProjectById,
                 getIssuesByProjectId : getIssuesByProjectId,
                 putEditedProject : putEditedProject,
-                getAllProjectsPaged : getAllProjectsPaged
+                getAllProjectsPaged : getAllProjectsPaged,
+                getAllUserRelatedProjects : getAllUserRelatedProjects,
+                addNewProject : addNewProject,
+                getAllProjects : getAllProjects
             }
         }
     ]);

@@ -2,9 +2,9 @@
 
 angular
     .module('IssueTracker')
-    .controller('ProjectController', [
+    .controller('ProjectDetailsController', [
         '$scope','$routeParams', '$location', 'projectService',
-        function ProjectController($scope, $routeParams, $location, projectService) {
+        function ProjectDetailsController($scope, $routeParams, $location, projectService) {
             var id = $routeParams.id;
 
             $scope.getProjectInfo = function(){
@@ -26,10 +26,11 @@ angular
                     })
             };
 
-
+            /*
+            * button EDIT PROJECT click function
+            */
             $scope.editProject = function(){
-             //   $location.path("projects/" + id + '/edit');
-                $location.path("projects/add");
+                $location.path("projects/" + id + '/edit');
             };
             $scope.getProjectInfo();
             $scope.getProjectIssues();

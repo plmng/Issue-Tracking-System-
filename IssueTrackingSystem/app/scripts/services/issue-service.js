@@ -4,20 +4,22 @@ angular
     .factory('issueService', [
         '$http',
         '$q',
-        'PAGE_SIZE',
+        'DASHBOARD_ISSUE_PAGE_SIZE',
         'BASE_URL',
-        function issueService($http, $q, PAGE_SIZE, BASE_URL){
-            function getAssignedIssues(pageNumber, order){
+        function issueService($http, $q, DASHBOARD_ISSUE_PAGE_SIZE, BASE_URL){
+            function getAssignedIssues(pageNumber, order, pageSize){
+
                 var deferred = $q.defer();
 
                 //issues/me?orderBy=Project.Name desc, IssueKey&pageSize=2&pageNumber=1
-                $http.get(BASE_URL + 'issues/me?orderBy=' + order + '&pageSize=' + PAGE_SIZE + '&pageNumber='+ pageNumber)
+                $http.get(BASE_URL + 'issues/me?orderBy=DueDate desc, IssueKey&pageSize=' + DASHBOARD_ISSUE_PAGE_SIZE + '&pageNumber='+ pageNumber)
                     .then(function(response){
                         deferred.resolve(response.data)
                     });
 
                 return deferred.promise;
             }
+
 
             /*
             * endpoint: GET Issues/{id}
@@ -90,7 +92,7 @@ angular
                 $http.get(BASE_URL + 'issues/'+ id + '/comments')
                     .then(function(response){
                        console.log(response);
-                        deferred.resolve(response.data);
+                        deferred.resolve(response.data.reverse());
                     });
                 return deferred.promise;
             }
@@ -104,9 +106,15 @@ angular
                 $http.post(BASE_URL + 'issues/'+ id + '/comments', comment)
                     .then(function(response){
                         console.log(response);
-                        deferred.resolve(response.data);
+                        deferred.resolve(response.data.reverse());
                     });
                 return deferred.promise;
+            }
+
+            function addNewIssue(issue,succes, error) {
+                return $http.post(BASE_URL + 'issues',issue,{
+                    headers: {'Content-Type': 'application/json'}
+                }).then(succes, error);
             }
 
             return{
@@ -116,7 +124,8 @@ angular
                 createIssue : createIssue,
                 changeIssueStatus : changeIssueStatus,
                 getAllComments : getAllComments,
-                addComment : addComment
+                addComment : addComment,
+                addNewIssue : addNewIssue
             }
         }
     ]);
