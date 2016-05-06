@@ -7,6 +7,7 @@ angular
         'DASHBOARD_ISSUE_PAGE_SIZE',
         'BASE_URL',
         function issueService($http, $q, DASHBOARD_ISSUE_PAGE_SIZE, BASE_URL){
+
             function getAssignedIssues(pageNumber, order, pageSize){
 
                 var deferred = $q.defer();
@@ -19,7 +20,6 @@ angular
 
                 return deferred.promise;
             }
-
 
             /*
             * endpoint: GET Issues/{id}

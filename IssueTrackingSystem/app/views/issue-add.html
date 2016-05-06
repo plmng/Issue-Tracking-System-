@@ -1,31 +1,37 @@
-<p>issue add page</p>
-<p>here is the form that will be opened in modal</p>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">Add Issue </h3>
+    </div>
+    <div class="panel-body">
+        <div class="modal-forms">
+            <form name="addNewIssueForm">
+                <label for="issueTitle">Title </label>
+                <input type="text"  required ng-model="issue.Title" id="issueTitle" class="form-control">
+                <label for="issueDescription">Description </label>
+                <textarea required ng-minlength="1" ng-model="issue.Description" id="issueDescription" class="form-control"></textarea>
+                <label for="issueDate">Duo date </label>
+                <input type="datetime" required ng-model="issue.DueDate" id="issueDate" class="form-control" >
+                <label for="issueProject">Project</label>
+                <select required id="issueProject" class="form-control" ng-options="project.Name for project in allProjects track by project.Id" ng-model="currentProject"></select>
+                <label for="projectAssignee">Assignee </label>
+                <select required id="projectAssignee" class="form-control" ng-model="issue.Assignee" ng-options="user.Username for user in usersForAssignees|orderBy:'Username'"></select>
+                <label for="issuePriority">Priority </label>
+                <select  id="issuePriority" class="form-control" ng-model="issue.Priority" ng-options="priority.Name for priority in issuePriorities|orderBy:'Name'"></select>
+                <label for="projectLabels">Labels </label>
+                <input type="text" uib-typeahead="label.Name for label in allLabels | filter:$viewValue" ng-model="label" id="projectLabels" class="form-control">
+                <br>
+                <button ng-click="addLabel(label)" class="btn-warning">Add label</button>
+                <br>
+                <br>
+                <span>Labels: </span>
+                <span class="labels-wrapper" ng-repeat="currentLabel in currentLabels">{{currentLabel.Name}}</span>
+                <br>
+                <br>
+                <button class="btn btn-primary" ng-disabled="addNewIssueForm.$invalid"  ng-click="addNewIssue(issue)">Create issue</button>
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+            </form>
+        </div>
 
-<div class="modal-forms">
-    <form name="addNewIssueForm">
-        <label for="issueTitle">Title </label>
-        <input type="text"  required ng-model="issue.Title" id="issueTitle" class="form-control">
-        <label for="issueDescription">Description </label>
-        <textarea required ng-minlength="1" ng-model="issue.Description" id="issueDescription" class="form-control"></textarea>
-        <label for="issueDate">Duo date </label>
-        <input type="datetime" required ng-model="issue.DueDate" id="issueDate" class="form-control" >
-        <label for="issueProject">Project</label>
-        <select required id="issueProject" class="form-control" ng-options="project.Name for project in allProjects track by project.Id" ng-model="currentProject"></select>
-        <label for="projectAssignee">Assignee </label>
-        <select required id="projectAssignee" class="form-control" ng-model="issue.Assignee" ng-options="user.Username for user in usersForAssignees|orderBy:'Username'"></select>
-        <label for="issuePriority">Priority </label>
-        <select  id="issuePriority" class="form-control" ng-model="issue.Priority" ng-options="priority.Name for priority in issuePriorities|orderBy:'Name'"></select>
-        <label for="projectLabels">Labels </label>
-        <input type="text" uib-typeahead="label.Name for label in allLabels | filter:$viewValue" ng-model="label" id="projectLabels" class="form-control">
-        <br>
-        <button ng-click="addLabel(label)" class="btn-warning">Add label</button>
-        <br>
-        <br>
-        <span>Labels: </span>
-        <span class="labels-wrapper" ng-repeat="currentLabel in currentLabels">{{currentLabel.Name}}</span>
-        <br>
-        <br>
-        <button class="btn btn-primary" ng-disabled="addNewIssueForm.$invalid"  ng-click="addNewIssue(issue)">Create issue</button>
-        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-    </form>
+    </div>
 </div>
+

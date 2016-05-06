@@ -10,6 +10,7 @@ angular
         'DASHBOARD_PROJECTS_PAGE_SIZE',
         function AllUserRelatedProjectsController($scope, $location, $linq, projectService, DASHBOARD_PROJECTS_PAGE_SIZE){
 
+            $scope.projectsDataLoaded = false;
             var _totalProjects;
             $scope.projectItemsPerPage = DASHBOARD_PROJECTS_PAGE_SIZE;
             $scope.projectCurrentPage = 1;
@@ -32,6 +33,7 @@ angular
                       _totalProjects = projectData;
                       $scope.projects = _getProjectPage(_totalProjects,$scope.projectCurrentPage );
                       $scope.projectPresence = $scope.projects.length > 0;
+                      $scope.projectsDataLoaded = true;
                       $scope.loaded = true;
                   })
             };

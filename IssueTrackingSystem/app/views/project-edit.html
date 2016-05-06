@@ -5,8 +5,7 @@
 <div class="col-md-12">
     <form name="projectForm" class="form-horizontal" ng-show="isLoadedData">
         <fieldset>
-            <!-- From scope to get edit or create new project -->
-            <!-- <legend>{{formType}}</legend>-->
+
 
             <!--Project Name-->
             <div class="form-group">
@@ -73,7 +72,7 @@
             <!--Buttons-->
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="reset" class="btn btn-success">Add Issue</button>
+                  <!--  <button type="reset" class="btn btn-success">Add Issue</button>-->
                     <button type="submit" class="btn btn-success"
                             ng-disabled="projectForm.$invalid"
                             ng-click="saveChanges(project)"

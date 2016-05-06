@@ -31,7 +31,8 @@
                     ng-click="changeStatus(availableStatus.Id)">{{availableStatus.Name}}</button>
         </span></div>
     <div>
-    <div class="panel panel-success" ng-show="isAssignee || isProjectLeader">
+        <!--Add Comment-->
+    <div class="panel panel-success" ng-if="isAssignee || isProjectLeader">
             <div class="panel-heading">
                 <h3 class="panel-title">new comment</h3>
             </div>
@@ -41,7 +42,7 @@
                         <textarea class="form-control marginBottom5" rows="3" ng-model="commentToAdd" required="required"></textarea>
                         <div class="col-md-11 col-md-offset-9">
                             <button class="btn btn-success btn-sm"
-                                    ng-disabled="addCommentForm.$invalid" ng-click="addComment()">Add comment</button>
+                                    ng-disabled="addCommentForm.$invalid" ng-click="addComment(commentToAdd)">Add comment</button>
                         </div>
 
                     </fieldset>

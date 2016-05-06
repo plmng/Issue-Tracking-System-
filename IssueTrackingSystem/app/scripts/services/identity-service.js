@@ -12,6 +12,7 @@ angular
         '$location',
         'BASE_URL',
         function identityService($http, $q, $location, BASE_URL){
+            var IDENTITY_STORAGE_KEY = '_IssueTracker_Identity_Storage_Key';
             var deferred = $q.defer();
         //    var currentUser = undefined;
 
@@ -21,9 +22,27 @@ angular
             */
             // TODO: current user data can be stored in localStorage and to read them from there
             function getCurrentUser(){
-                var currentUser = sessionStorage['currentUser'];
-                if (currentUser) {
-                    return JSON.parse(sessionStorage['currentUser']);
+                //var currentUser = sessionStorage['currentUser'];
+                //var isLoggedIn = localStorage[IDENTITY_STORAGE_KEY];
+                //localStorage[IDENTITY_STORAGE_KEY] = JSON.stringify(response.data);
+                if (isAuthenticated()) {
+                  return   JSON.parse(localStorage[IDENTITY_STORAGE_KEY]);
+                  //  return JSON.parse(sessionStorage['currentUser']);
+                }
+                else{
+                    $location.path('/');
+                }
+            }
+
+            function isAuthenticated(){
+                var isLoggedIn = localStorage[IDENTITY_STORAGE_KEY];
+                return !!isLoggedIn;
+            }
+
+            function isAdmin(){
+                if (isAuthenticated()){
+                    var user = getCurrentUser();
+                    return user.isAdmin;
                 }
             }
 
@@ -32,7 +51,8 @@ angular
             * @desc removes currentUser data
             */
             function removeCurrentUserData(){
-                delete sessionStorage['currentUser'];
+          //      delete sessionStorage['currentUser'];
+                delete localStorage[IDENTITY_STORAGE_KEY];
             }
 
             /*
@@ -44,7 +64,8 @@ angular
 
                 $http.get(BASE_URL + 'Users/me')
                     .then(function(response) {
-                        sessionStorage['currentUser'] = JSON.stringify(response.data);
+                        localStorage[IDENTITY_STORAGE_KEY] = JSON.stringify(response.data);
+                   //     sessionStorage['currentUser'] = JSON.stringify(response.data);
                         deferred.resolve(response.data);
                         currentUserDataDeferred.resolve();
                     });
@@ -70,7 +91,10 @@ angular
                 getCurrentUser : getCurrentUser,
                 loadCurrentUserData : loadCurrentUserData,
                 removeCurrentUserData : removeCurrentUserData,
-                changePassword : changePassword
+                changePassword : changePassword,
+                isAuthenticated : isAuthenticated,
+                isAdmin : isAdmin
+
             }
         }
     ]);

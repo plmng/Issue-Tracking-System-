@@ -18,12 +18,13 @@
         <span ng-repeat="priority in project.Priorities">
             <span class="label label-default marginRight1">{{priority.Name}} </span></span> </p>
 
-    <!--TODO SET LINKS TO THE BUTTONS-->
+
 
     <div>
         <hr>
-        <a ng-show="isAuthor"  ng-click="editProject()" class="btn btn-success btn-xs marginBottom5">Edit Project</a>
-        <a ng-show="isAuthor" href="#" class="btn btn-success btn-xs marginBottom5">Add New Issue</a>
+        <a ng-show="isPrLAdmin"  ng-click="editProject()" class="btn btn-success btn-sm marginBottom5">Edit Project</a>
+        <a ng-show="isProjectLeader" ng-click="openAddIssueToProjectModal(project)" class="btn btn-success btn-sm marginBottom5">Add New Issue</a>
+
         <hr>
     </div>
 </div>
@@ -43,16 +44,11 @@
 
             <tbody>
                 <tr ng-repeat="issue in issues ">
-                    <td class="col-md-2"> {{issue.Title}} </td>
+                    <td class="col-md-2"><a href="/#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
                     <td class="col-md-6"> {{issue.Description}} </td>
                     <td class="col-md-2"> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
                     <td class="col-md-2"> {{issue.Assignee['Username']}} </td>
 
-                    <!-- Old table rows save for the functions
-                    <td class="hoverable" ng-click="viewIssue(issue.Id)">{{issue.Title}}</td>
-                    <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project['Name']}}</td>
-                    <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
-                    -->
                 </tr>
             </tbody>
 

@@ -7,7 +7,8 @@ angular
         'issueService',
         'DASHBOARD_ISSUE_PAGE_SIZE',
         function DashboardController($scope, $location, issueService, DASHBOARD_ISSUE_PAGE_SIZE){
-            //note: zaqwkata wryshta samo po stranici, a ne wsichki zaqweni issues:
+
+            $scope.issueDataLoaded = false;
             var projects = [];
             $scope.itemsPerPage = DASHBOARD_ISSUE_PAGE_SIZE;
             $scope.currentPage = 1;
@@ -34,6 +35,7 @@ angular
                         $scope.issues = issuesData['Issues'];
                         $scope.totalItems = issuesData.TotalPages * DASHBOARD_ISSUE_PAGE_SIZE;
                         $scope.issuePresence = $scope.issues.length > 0;
+                        $scope.issueDataLoaded = true;
                         $scope.loaded = true;
                     })
             };

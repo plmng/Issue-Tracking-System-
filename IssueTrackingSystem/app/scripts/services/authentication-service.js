@@ -12,6 +12,7 @@ angular
             var AUTHENTICATION_COOKIE_KEY = '_IssueTracker_Authentication_Cookie_Key';
 
 
+
             /*
             * @name preserveUserData
             * @desc save the access token in cookie
