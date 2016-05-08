@@ -76,5 +76,3 @@ angular
 
 
         }]);
-
-//_issue.DueDate =  $scope.issue.DueDateDate.toISOString()

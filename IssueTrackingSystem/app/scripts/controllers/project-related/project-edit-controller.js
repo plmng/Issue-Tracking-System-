@@ -11,25 +11,6 @@ angular
             $scope.isDisabled = true;
             $scope.isLoadedData = false;
 
-            /*
-            * get project details by id and display them on form
-            * Object {Id: 86, Name: "sdxxc cx", ProjectKey: "sc", Description: "sd", Lead: Object…}
-             Description : "sd"
-             Id :  86
-             Labels :  Array[1]
-                                 Id : 526
-                                 Name : "pesho"
-             Lead : Object
-                                 Id : "e0e672ee-9382-4860-98be-cfa68743a20a"
-                                 Username : "admin@softuni.bg"
-                                 isAdmin  :       true
-             Name :  "sdxxc cx"
-             Priorities :  Array[1]
-                                 Id : 1
-                                 Name : "Low"
-            ProjectKey : "sc"
-             TransitionSchemeId : 1
-            */
 
             var id = $routeParams.id;
             /*

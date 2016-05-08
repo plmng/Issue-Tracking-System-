@@ -1,6 +1,9 @@
 .main-content{
 
 }
+body{
+    padding-bottom: 70px;
+}
 .the-table {
     table-layout: fixed;
     word-wrap: break-word;
@@ -42,4 +45,8 @@
 }
 td.nowrap {
     min-width: 100px;
+}
+#footer {
+
+    height: 60px;
 }

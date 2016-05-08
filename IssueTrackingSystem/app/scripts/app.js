@@ -34,7 +34,6 @@ angular
                 templateUrl: 'app/views/projects.html',
                 controller: 'ProjectAllController'
             });
-
             $routeProvider.when('/issues/:id', {
                 templateUrl: 'app/views/issue-details.html',
                 controller: 'IssueDetailsController'

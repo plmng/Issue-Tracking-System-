@@ -3,8 +3,15 @@
 angular
     .module('IssueTracker')
     .controller('ProjectAllController', [
-        '$scope', '$routeParams', '$location','$uibModal','projectService', 'userService', 'DASHBOARD_PROJECTS_PAGE_SIZE',
-        function ProjectAllController($scope, $routeParams, $location, $uibModal, projectService, userService, DASHBOARD_PROJECTS_PAGE_SIZE ){
+        '$scope', '$routeParams', '$location','$uibModal','projectService', 'userService', 'DASHBOARD_PROJECTS_PAGE_SIZE','identityService','notifyService',
+        function ProjectAllController($scope, $routeParams, $location, $uibModal, projectService, userService, DASHBOARD_PROJECTS_PAGE_SIZE, identityService, notifyService  ){
+
+             var currentUser = identityService.getCurrentUser();
+                if(!currentUser.isAdmin){
+                    notifyService.error('unauthorized access');
+                    $location.path('/');
+                }
+
 
             $scope.itemsPerPage = DASHBOARD_PROJECTS_PAGE_SIZE;
             $scope.currentPage = 1;

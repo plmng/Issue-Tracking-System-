@@ -50,8 +50,9 @@
 
 
 
-    <div ng-view class="main-content" ng-cloak></div>
+    <div ng-show="isAuthenticated" ng-view class="main-content" ng-cloak></div>
 
+   <!-- <div ng-show="isAuthenticated" footer ></div> -->
 
     <!-- In production use: <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script> -->
 
@@ -60,13 +61,12 @@
 
     <!-- CONTROLLERS -->
     <script type="text/javascript" src="app/scripts/controllers/main-controller.js"></script>
-    <script type="text/javascript" src="app/scripts/controllers/user-controller.js"></script>
-    <script type="text/javascript" src="app/scripts/controllers/issue-related/dashboard-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/project-related/projects-all-user-related-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/project-related/project-details-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/project-related/project-edit-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/project-related/project-add-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/project-related/projects-all-controller.js"></script>
+    <script type="text/javascript" src="app/scripts/controllers/issue-related/dashboard-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/issue-related/issue-details-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/issue-related/issue-add-controller.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/issue-related/issue-edit-controller.js"></script>
@@ -85,9 +85,10 @@
     <!-- DIRECTIVES -->
     <script type="text/javascript" src="app/scripts/directives/navigation-directive.js"></script>
     <script type="text/javascript" src="app/scripts/directives/authenticationForms-directive.js"></script>
-    <script type="text/javascript" src="app/scripts/directives/dashboard-directive.js"></script>
-    <script type="text/javascript" src="app/scripts/directives/all-related-projects-directive.js"></script>
+    <script type="text/javascript" src="app/scripts/directives/dashboard-issues-directive.js"></script>
+    <script type="text/javascript" src="app/scripts/directives/dashboard-projects-directive.js"></script>
     <script type="text/javascript" src="app/scripts/directives/issue-form-directive.js"></script>
+    <script type="text/javascript" src="app/scripts/directives/footer-directive.js"></script>
 
 </body>
 </html>
