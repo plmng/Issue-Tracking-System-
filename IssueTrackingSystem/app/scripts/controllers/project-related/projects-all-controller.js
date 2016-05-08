@@ -26,8 +26,6 @@ angular
                 var filter = '';
                 projectService.getAllProjectsPaged($scope.currentPage, filter)
                     .then(function(projectsData){
-                        console.log('projects-all-controller');
-                        console.log(projectsData);
                         $scope.projects = projectsData.Projects;
                         $scope.totalItems = projectsData.TotalPages * DASHBOARD_PROJECTS_PAGE_SIZE;
                         $scope.projectsPresence = $scope.projects.length > 0;

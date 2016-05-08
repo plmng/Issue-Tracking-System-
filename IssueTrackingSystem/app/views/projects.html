@@ -3,8 +3,8 @@
         <div class="col-md-2">
             <h2 class="green ">All Projects</h2>
         </div>
-        <div class="col-md-4 col-md-offset-6 form-group has-success">
-            <input type="text" class="form-control" placeholder="Search by project name" ng-model="searchedName">
+        <div  ng-if="projectsPresence"  class="col-md-4 col-md-offset-6 form-group has-success">
+            <input type="text" class="form-control" placeholder="Search by issue name" ng-model="searchedName">
         </div>
     </div>
 
@@ -32,6 +32,7 @@
                             ng-click="openAddIssueToProjectModal(project)">Add Issue</button>
                 </td>
             </tr>
+
             <tr ng-if="searchedName" ng-repeat="project in projects | orderBy: project.Id | filter:searchedName">
                 <td><a href="/#/projects/{{project.Id}}">{{project.Name}}</a> </td>
                 <td> {{project.Description}} </td>

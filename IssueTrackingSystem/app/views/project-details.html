@@ -32,6 +32,10 @@
 <!--Project Issues part -->
 <div class="col-md-9">
     <div class="well maxSized marginBottom0 " >
+        <div class="col-md-4 col-md-offset-6 form-group has-success">
+            <input type="text" class="form-control" placeholder="Search by project name" ng-model="searchedName">
+        </div>
+
         <table  ng-if="issuePresence" class="table table-striped the-table">
             <thead>
                 <tr class="green">
@@ -43,7 +47,14 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="issue in issues ">
+                <tr ng-if="!searchedName" ng-repeat="issue in issues ">
+                    <td class="col-md-2"><a href="/#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
+                    <td class="col-md-6"> {{issue.Description}} </td>
+                    <td class="col-md-2"> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
+                    <td class="col-md-2"> {{issue.Assignee['Username']}} </td>
+
+                </tr>
+                <tr ng-if="searchedName" ng-repeat="issue in issues | orderBy: issue.Title | filter:searchedName">
                     <td class="col-md-2"><a href="/#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
                     <td class="col-md-6"> {{issue.Description}} </td>
                     <td class="col-md-2"> {{issue.DueDate | date:'dd-MM-yyyy'}} </td>
